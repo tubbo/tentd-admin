@@ -8,6 +8,12 @@ require 'rack/csrf'
 require 'slim'
 require 'coffee_script'
 require 'sass'
+require 'rack/ssl-enforcer'
+require 'logger'
+require 'tentd-admin/setup_tent'
+require 'tentd-admin/set_entity'
+require 'sequel'
+
 
 module TentD
   class Admin < Sinatra::Base
@@ -19,9 +25,15 @@ module TentD
       set :cdn_url, ENV['ADMIN_CDN_URL']
 
       set :method_override, true
+
     end
 
     use Rack::Csrf
+    use Rack::Session::Cookie,  :key => 'tent.session',
+                                :expire_after => 2592000, # 1 month
+                                :secret => ENV['COOKIE_SECRET'] || SecureRandom.hex
+    use(Rack::Auth::Basic, 'Tent Admin') { |u,p| u == ENV['ADMIN_USERNAME'] && p == ENV['ADMIN_PASSWORD'] }
+    use SetupTent
 
     helpers do
       def path_prefix
