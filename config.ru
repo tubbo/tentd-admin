@@ -4,8 +4,8 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'bundler/setup'
 require 'tentd'
 require 'tentd-admin/app'
-require 'tentd-admin/server'
 require 'tentd-admin/oauth_redirect'
+require 'tentd-admin/set_entity'
 require 'rack/ssl-enforcer'
 require 'logger'
 
@@ -15,7 +15,7 @@ use Rack::SslEnforcer, hsts: true if ENV['RACK_ENV'] == 'production'
 
 map '/' do
   use SetEntity
-  run TentD::Server.new
+  run TentD.new
 end
 
 map '/oauth' do
