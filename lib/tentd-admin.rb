@@ -1,6 +1,7 @@
 require "tentd-admin/version"
+require "tentd-admin/app"
 
-module Tentd
+module TentD
   module Admin
     # Your code goes here...
   end
