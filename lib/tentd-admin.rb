@@ -1,5 +1,4 @@
 require "tentd-admin/version"
-require "tentd-admin/app"
 
 module TentD
   module Admin
