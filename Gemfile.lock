@@ -136,7 +136,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  addressable
+  addressable (~> 2.3)
   asset_sync!
   girl_friday
   mime-types
